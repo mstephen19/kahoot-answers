@@ -27,7 +27,7 @@ export const getAnswers = async ({ type, uri }: Request) => {
     try {
         const { data } = await axios.get(uri);
 
-        if (type === types.CHALLENGE) {
+        if (type === 'CHALLENGE') {
             const { answers } = data;
 
             return answers.map(({ question }: any) => {
@@ -36,7 +36,7 @@ export const getAnswers = async ({ type, uri }: Request) => {
             });
         }
 
-        if (type === types.QUIZ) {
+        if (type === 'QUIZ') {
             const { questions } = data;
 
             return questions.map(({ choices, question }: any) => {

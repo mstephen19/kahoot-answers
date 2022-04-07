@@ -3,6 +3,13 @@ import { AuthenticationError } from 'apollo-server-express';
 import { signToken } from '../auth';
 import { TokenPayload } from '../auth/signToken';
 
+import { Thready } from 'node-thready';
+import path from 'path';
+
+Thready.init({
+    dir: __dirname,
+});
+
 const resolvers = {
     Query: {
         answers: async (_: any, { url }: { url: string }, { auth }: Partial<{ auth: TokenPayload }>) => {
@@ -11,11 +18,20 @@ const resolvers = {
             try {
                 const request = createRequest(url);
 
-                const answers = await getAnswers(request);
+                const answers = await Thready.go({
+                    script: getAnswers,
+                    args: [request],
+                    imports: [
+                        {
+                            name: 'axios_1',
+                            from: 'axios',
+                        },
+                    ],
+                });
 
                 return answers;
             } catch (error) {
-                return [];
+                return new Error(`Failed to grab answers!`);
             }
         },
         token: async (_: any, __: any, { ip, auth }: { auth: TokenPayload; ip: string }) => {
