@@ -1,0 +1,27 @@
+.icon {
+    position: fixed;
+    top: 0;
+    transform: rotate(-45deg);
+    background: white;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    padding: 5px;
+    height: 70px;
+    width: 100px;
+    left: -40px;
+    top: -25px;
+}
+
+.github {
+    font-size: clamp(2rem, 5vw, 2rem);
+    color: black;
+    transition: all 0.1s linear;
+}
+
+@media (hover: hover) {
+    .github:hover {
+        color: grey;
+        transform: scale(1.1);
+    }
+}

@@ -1,6 +1,7 @@
 .wrapper {
     width: 75vw;
     max-width: 1000px;
+    min-width: 300px;
     padding: 10px;
     display: flex;
     justify-content: center;
@@ -20,6 +21,7 @@
     flex-wrap: wrap;
     width: 75vw;
     max-width: 1000px;
+    min-width: 300px;
     display: flex;
     justify-content: center;
     gap: 10px;

@@ -1,11 +1,12 @@
+// @ts-nocheck
 import jwt from 'jsonwebtoken';
 
 import type { TokenPayload } from './signToken';
 
-const authMiddleware = ({ req }) => {
+const authMiddleware = ({ req }: any) => {
     let token: string = req.headers?.authorization;
 
-    if (token) token = token.split(' ').pop().trim();
+    if (token) token = token?.split(' ').pop().trim();
 
     try {
         const { data } = jwt.verify(token, process.env.AUTH_SECRET, { maxAge: process.env.AUTH_EXPIRATION }) as Record<'data', TokenPayload>;

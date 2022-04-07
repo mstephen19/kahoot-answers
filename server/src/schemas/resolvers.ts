@@ -1,10 +1,11 @@
 import { createRequest, getAnswers } from '../lib/kahoot';
 import { AuthenticationError } from 'apollo-server-express';
 import { signToken } from '../auth';
+import { TokenPayload } from '../auth/signToken';
 
 const resolvers = {
     Query: {
-        answers: async (_: any, { url }: { url: string }, { auth }) => {
+        answers: async (_: any, { url }: { url: string }, { auth }: Partial<{auth: TokenPayload}>) => {
             if (!auth) return new AuthenticationError('No token')
 
             try {
@@ -17,7 +18,7 @@ const resolvers = {
                 return [];
             }
         },
-        token: async (_: any, __: any, { headers, auth }) => {
+        token: async (_: any, __: any, { headers, auth }: Partial<{auth: TokenPayload, headers: any}>) => {
             if (auth) return new Error('You already have a token!');
 
             if (!headers || !headers?.['user-agent'] || !headers?.['sec-ch-ua']) {

@@ -18,6 +18,8 @@ const Home: NextPage = () => {
     const [kahootAnswers, setKahootAnswers] = useState([]);
 
     useEffect(() => {
+        if (localStorage.getItem('input')) setUrl(localStorage.getItem('input') as string);
+
         if (Auth.validateToken()) return;
 
         (async () => {
@@ -33,6 +35,7 @@ const Home: NextPage = () => {
         if (!target?.value) return;
 
         setUrl(target.value);
+        localStorage.setItem('input', target.value);
     };
 
     const handleClick = async () => {
@@ -41,16 +44,23 @@ const Home: NextPage = () => {
         }
 
         if (!Auth.validateToken()) {
-            return toast.error('Token expired. Please reload.');
+            toast.error('Token expired. Reloading now...');
+            return window.location.reload();
         }
 
         const { data } = (await answers({ variables: { url } })) || {};
 
-        if (error || !data?.answers) return toast.error('The request failed!');
+        if (error || !data?.answers) return toast.error(`The request failed! ${error && error?.message}`);
 
         setKahootAnswers(data.answers);
 
         toast.success('Successfully grabbed answers!');
+    };
+
+    const handleClear = () => {
+        setUrl('');
+        localStorage.setItem('input', '');
+        setKahootAnswers([]);
     };
 
     return (
@@ -59,7 +69,18 @@ const Home: NextPage = () => {
                 <Typography variant={'h2'} component={'h2'}>
                     Kahoot Answers
                 </Typography>
-                <TextField label='Kahoot URL' variant='filled' className={classes.text} onChange={(e) => handleInputChange(e as any)} />
+                <Box sx={{ width: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '5px' }}>
+                    <TextField
+                        label='Kahoot URL'
+                        variant='filled'
+                        className={classes.text}
+                        onChange={(e) => handleInputChange(e as any)}
+                        value={url}
+                    />
+                    <Button variant={'contained'} color={'error'} onClick={() => handleClear()}>
+                        Clear
+                    </Button>
+                </Box>
                 <Button variant={'contained'} type={'submit'} onClick={() => handleClick()}>
                     Go
                 </Button>

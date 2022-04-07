@@ -1,4 +1,4 @@
-import { Box, Typography } from '@mui/material';
+import { Box, Typography, Tooltip } from '@mui/material';
 
 import { shortenAndTrim } from '../../utils';
 
@@ -13,16 +13,10 @@ interface ChoiceProps {
 
 export default function Choice({ choice }: ChoiceProps) {
     return (
-        <>
-            {choice?.correct ? (
-                <Box sx={{ background: 'limegreen' }} className={classes.choice}>
-                    <Typography>{shortenAndTrim(choice?.answer)}</Typography>
-                </Box>
-            ) : (
-                <Box sx={{ background: 'grey' }} className={classes.choice}>
-                    <Typography>{shortenAndTrim(choice?.answer)}</Typography>
-                </Box>
-            )}
-        </>
+        <Tooltip title={choice?.correct ? 'Correct Answer' : 'Incorrect Answer'} placement={'top'} arrow>
+            <Box className={`${classes.choice} ${choice.correct ? classes.correct : classes.wrong}`}>
+                <Typography>{shortenAndTrim(choice?.answer)}</Typography>
+            </Box>
+        </Tooltip>
     );
 }

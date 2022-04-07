@@ -13,9 +13,14 @@ export interface QuestionProps {
 
 export default function Question({ index, title, choices }: QuestionProps) {
     return (
-        <Paper className={classes.wrapper}>
+        <Paper elevation={4} className={classes.wrapper}>
             <Box className={classes.topBox}>
-                <Typography variant={'subtitle1'} component={'p'} align={'center'}>
+                <Paper elevation={8} className={classes.questionNumber}>
+                    <Typography variant={'h6'} component={'p'}>
+                        Q.{index + 1}
+                    </Typography>
+                </Paper>
+                <Typography variant={'subtitle1'} component={'p'} align={'center'} className={classes.questionText}>
                     {shortenAndTrim(title)}
                 </Typography>
             </Box>
