@@ -11,8 +11,13 @@ const typeDefs = gql`
         choices: [Choice]
     }
 
+    type Token {
+        token: String
+    }
+
     type Query {
         answers(url: String!): [Answers]
+        token: Token
     }
 `;
 

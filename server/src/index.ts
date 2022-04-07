@@ -5,6 +5,7 @@ import compression from 'compression';
 import logger from 'morgan';
 
 import apollo from './config/apollo';
+import rateLimit from './config/rateLimit';
 
 const PORT = process.env.PORT || 8080;
 const dev = process.env.NODE_ENV !== 'production';
@@ -22,6 +23,7 @@ nxt.prepare().then(() => {
 
     app.use(logger('dev'));
     app.use(compression());
+    app.use(rateLimit);
 
     app.get('*', (req, res) => {
         return handle(req, res);
@@ -29,6 +31,6 @@ nxt.prepare().then(() => {
 
     app.listen(PORT, () => {
         console.log(`Listening on ${PORT}`);
-        console.log(`GraphQL: ${PORT}${apollo.graphqlPath}`)
+        console.log(`GraphQL: ${PORT}${apollo.graphqlPath}`);
     });
 });

@@ -19,6 +19,7 @@
 .box {
     flex-wrap: wrap;
     width: 75vw;
+    max-width: 1000px;
     display: flex;
     justify-content: center;
     gap: 10px;

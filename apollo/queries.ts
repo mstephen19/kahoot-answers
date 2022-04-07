@@ -11,3 +11,11 @@ export const ANSWERS = gql`
         }
     }
 `;
+
+export const TOKEN = gql`
+    query token {
+        token {
+            token
+        }
+    }
+`;

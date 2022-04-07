@@ -1,7 +1,7 @@
 .wrapper {
     flex: 1 1 auto;
     width: 45%;
-    max-width: 500px;
+    max-width: 1000px;
     min-width: 300px;
     padding: 10px;
     display: flex;
