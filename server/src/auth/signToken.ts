@@ -2,15 +2,15 @@
 import jwt from 'jsonwebtoken';
 
 interface TokenSignParams {
-    'user-agent': string;
+    ip: string;
 }
 
 export interface TokenPayload {
-    userAgent: string;
+    ip: string;
 }
 
-const signToken = (params: TokenSignParams) => {
-    const data: TokenPayload = { userAgent: params['user-agent'] || params['User-Agent'] };
+const signToken = ({ ip }: TokenSignParams) => {
+    const data: TokenPayload = { ip };
     return jwt.sign({ data }, process.env.AUTH_SECRET, { expiresIn: process.env.AUTH_EXPIRATION });
 };
 

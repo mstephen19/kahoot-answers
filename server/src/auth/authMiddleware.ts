@@ -15,8 +15,6 @@ const authMiddleware = ({ req }: any) => {
         console.error('Invalid token');
     }
 
-    req.head = req.headers;
-
     return req;
 };
 

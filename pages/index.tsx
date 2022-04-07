@@ -25,7 +25,7 @@ const Home: NextPage = () => {
         (async () => {
             const { data } = await token();
 
-            console.log(data.token.token);
+            if (!data?.token?.token) return toast.error('Failed to fetch API key! Please reload...');
 
             Auth.setToken(data.token.token);
         })();
