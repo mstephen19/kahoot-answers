@@ -18,7 +18,18 @@ export default function Layout({ children }: ComponentProps<any>) {
                 <GitHubIcon className={classes.github} />
             </a>
 
-            <Container maxWidth='xl' sx={{ mt: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', flexWrap: 'wrap', gap: '5px' }}>
+            <Container
+                maxWidth='xl'
+                sx={{
+                    mt: 1,
+                    display: 'flex',
+                    flexDirection: 'column',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    flexWrap: 'wrap',
+                    gap: '5px',
+                }}
+            >
                 {children && children}
             </Container>
         </>

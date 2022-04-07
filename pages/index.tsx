@@ -20,6 +20,10 @@ const Home: NextPage = () => {
     useEffect(() => {
         if (localStorage.getItem('input')) setUrl(localStorage.getItem('input') as string);
 
+        const storedAnswers = JSON.parse(sessionStorage.getItem('answers') || '[]');
+
+        if (storedAnswers.length) setKahootAnswers(storedAnswers);
+
         if (Auth.validateToken()) return;
 
         (async () => {
@@ -32,9 +36,9 @@ const Home: NextPage = () => {
     }, []);
 
     const handleInputChange = ({ target }: { target: HTMLTextAreaElement }) => {
-        if (!target?.value) return;
+        if (typeof target?.value !== 'string') return;
 
-        setUrl(target.value);
+        setUrl(target?.value);
         localStorage.setItem('input', target.value);
     };
 
@@ -55,6 +59,7 @@ const Home: NextPage = () => {
         if (error || !data?.answers) return toast.error(`The request failed! ${error && error?.message}`);
 
         setKahootAnswers(data.answers);
+        sessionStorage.setItem('answers', JSON.stringify(data.answers));
 
         toast.success('Successfully grabbed answers!');
     };
@@ -63,6 +68,7 @@ const Home: NextPage = () => {
         setUrl('');
         localStorage.setItem('input', '');
         setKahootAnswers([]);
+        sessionStorage.setItem('answers', '[]');
     };
 
     return (

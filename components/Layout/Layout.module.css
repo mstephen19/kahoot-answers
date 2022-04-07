@@ -14,7 +14,7 @@
 }
 
 .github {
-    font-size: clamp(2rem, 5vw, 2rem);
+    font-size: clamp(2rem, 5vw, 2.2rem);
     color: black;
     transition: all 0.1s linear;
 }
