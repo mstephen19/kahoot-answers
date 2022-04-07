@@ -10,13 +10,14 @@ export default function Layout({ children }: ComponentProps<any>) {
         <>
             <Head>
                 <title>Kahoot! Answers</title>
-                <meta name='description' content='Get the correct answers for any Kahoot quiz.' />
-                <link rel='icon' href='/favicon.ico' />
+                <meta name='description' content='Get the correct answers for any Kahoot quiz or challenge.' />
+                <meta name='robots' content='noindex,nofollow' />
+                <meta name='googlebot' content='notranslate' />
+                <meta property='og:title' content='Kahoot! Answers' />
+                <meta property='og:type' content='website' />
+                <meta property='og:url' content='https://kahoot-answers.herokuapp.com/' />
+                <meta property='og:description' content='Get the correct answers for any Kahoot quiz or challenge.' />
             </Head>
-
-            <a href='https://github.com/mstephen19/kahoot-answers' target='_blank' rel='noreferrer' className={classes.icon}>
-                <GitHubIcon className={classes.github} />
-            </a>
 
             <Container
                 maxWidth='xl'
@@ -30,6 +31,9 @@ export default function Layout({ children }: ComponentProps<any>) {
                     gap: '5px',
                 }}
             >
+                <a href='https://github.com/mstephen19/kahoot-answers' target='_blank' rel='noreferrer' className={classes.icon}>
+                    <GitHubIcon className={classes.github} />
+                </a>
                 {children && children}
             </Container>
         </>

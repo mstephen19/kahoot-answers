@@ -1,3 +1,4 @@
+import React from 'react';
 import type { NextPage } from 'next';
 import { useState, useEffect, MouseEvent } from 'react';
 import { Paper, Typography, TextField, Button, Box } from '@mui/material';
@@ -6,9 +7,9 @@ import { Toaster, toast } from 'react-hot-toast';
 import classes from '../styles/Index.module.css';
 import { ANSWERS, TOKEN } from '../apollo/queries';
 import { validateUrl } from '../utils';
-import Loading from '../components/Loading';
-import Question from '../components/Question';
-import { QuestionProps } from '../components/Question/Question';
+const Loading = React.lazy(() => import('../components/Loading'));
+const Question = React.lazy(() => import('../components/Question'));
+import type { QuestionProps } from '../components/Question/Question';
 import Auth from '../auth/Auth';
 
 const Home: NextPage = () => {
@@ -16,12 +17,12 @@ const Home: NextPage = () => {
     const [token] = useLazyQuery(TOKEN);
     const [url, setUrl] = useState('');
     const [kahootAnswers, setKahootAnswers] = useState([]);
+    const [goDisabled, setGoDisabled] = useState(false);
 
     useEffect(() => {
         if (localStorage.getItem('input')) setUrl(localStorage.getItem('input') as string);
 
         const storedAnswers = JSON.parse(sessionStorage.getItem('answers') || '[]');
-
         if (storedAnswers.length) setKahootAnswers(storedAnswers);
 
         if (Auth.validateToken()) return;
@@ -62,6 +63,9 @@ const Home: NextPage = () => {
         sessionStorage.setItem('answers', JSON.stringify(data.answers));
 
         toast.success('Successfully grabbed answers!');
+
+        setGoDisabled(true);
+        setTimeout(() => setGoDisabled(false), 5000);
     };
 
     const handleClear = () => {
@@ -72,7 +76,7 @@ const Home: NextPage = () => {
     };
 
     return (
-        <>
+        <React.Suspense fallback={<p>Loading...</p>}>
             <Paper elevation={4} className={classes.wrapper}>
                 <Typography variant={'h2'} component={'h2'}>
                     Kahoot Answers
@@ -89,7 +93,7 @@ const Home: NextPage = () => {
                         Clear
                     </Button>
                 </Box>
-                <Button variant={'contained'} type={'submit'} onClick={(e) => handleClick(e)}>
+                <Button variant={'contained'} type={'submit'} onClick={(e) => handleClick(e)} disabled={goDisabled}>
                     Go
                 </Button>
                 <Toaster position='top-center' reverseOrder={false} toastOptions={{ duration: 3000 }} />
@@ -100,7 +104,7 @@ const Home: NextPage = () => {
                     return <Question title={title} choices={choices} index={i} key={i} />;
                 })}
             </Box>
-        </>
+        </React.Suspense>
     );
 };
 

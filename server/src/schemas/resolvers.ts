@@ -12,8 +12,10 @@ Thready.init({
 
 const resolvers = {
     Query: {
-        answers: async (_: any, { url }: { url: string }, { auth }: Partial<{ auth: TokenPayload }>) => {
+        answers: async (_: any, { url }: { url: string }, { auth, ip }: { auth: TokenPayload; ip: string }) => {
             if (!auth) return new AuthenticationError('No token');
+
+            if (auth.ip !== ip) return new AuthenticationError("This token isn't yours!");
 
             try {
                 const request = createRequest(url);
