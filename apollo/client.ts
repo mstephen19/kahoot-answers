@@ -5,7 +5,8 @@ import { getCookie } from 'cookies-next';
 import { TOKEN } from '../auth/constants';
 
 const link = createHttpLink({
-    uri: 'https://kahoot-answers.herokuapp.com/graphql',
+    // uri: 'https://kahoot-answers.herokuapp.com/graphql',
+    uri: 'http://localhost:8080/graphql',
 });
 
 const authLink = setContext((_, { headers }) => {

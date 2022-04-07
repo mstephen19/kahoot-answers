@@ -21,7 +21,7 @@ const resolvers = {
         token: async (_: any, __: any, { headers, auth }: Partial<{auth: TokenPayload, headers: any}>) => {
             if (auth) return new Error('You already have a token!');
 
-            if (!headers || !headers?.['user-agent'] || !headers?.['sec-ch-ua']) {
+            if (!headers || !headers?.['user-agent'] || !headers?.['User-Agent']) {
                 return new AuthenticationError('Failed to authenticate.');
             }
 
