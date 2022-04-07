@@ -1,5 +1,5 @@
 import type { NextPage } from 'next';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, MouseEvent } from 'react';
 import { Paper, Typography, TextField, Button, Box } from '@mui/material';
 import { useLazyQuery } from '@apollo/client';
 import { Toaster, toast } from 'react-hot-toast';
@@ -38,7 +38,9 @@ const Home: NextPage = () => {
         localStorage.setItem('input', target.value);
     };
 
-    const handleClick = async () => {
+    const handleClick = async (e: MouseEvent) => {
+        e.preventDefault();
+
         if (!validateUrl(url)) {
             return toast.error("Sorry! We can't take this URL");
         }
@@ -81,7 +83,7 @@ const Home: NextPage = () => {
                         Clear
                     </Button>
                 </Box>
-                <Button variant={'contained'} type={'submit'} onClick={() => handleClick()}>
+                <Button variant={'contained'} type={'submit'} onClick={(e) => handleClick(e)}>
                     Go
                 </Button>
                 <Toaster position='top-center' reverseOrder={false} toastOptions={{ duration: 3000 }} />
