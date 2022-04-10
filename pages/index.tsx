@@ -55,17 +55,23 @@ const Home: NextPage = () => {
             return window.location.reload();
         }
 
-        const { data } = (await answers({ variables: { url } })) || {};
+        try {
+            const { data } = await answers({ variables: { url } });
 
-        if (error || !data?.answers) return toast.error(`The request failed! ${error && error?.message}`);
+            if (error || !data?.answers) return toast.error(`The request failed! ${error && error?.message}`);
 
-        setKahootAnswers(data.answers);
-        sessionStorage.setItem('answers', JSON.stringify(data.answers));
+            setKahootAnswers(data.answers);
+            sessionStorage.setItem('answers', JSON.stringify(data.answers));
 
-        toast.success('Successfully grabbed answers!');
+            toast.success('Successfully grabbed answers!');
 
-        setGoDisabled(true);
-        setTimeout(() => setGoDisabled(false), 5000);
+            setGoDisabled(true);
+            setTimeout(() => setGoDisabled(false), 5000);
+        } catch (error) {
+            toast.error('Request failed! Trying again!');
+            Auth.removeToken();
+            window.location.reload();
+        }
     };
 
     const handleClear = () => {

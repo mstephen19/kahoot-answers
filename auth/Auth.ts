@@ -28,6 +28,10 @@ class Auth {
 
         return !this.isTokenExpired(token);
     }
+
+    removeToken() {
+        removeCookies(TOKEN);
+    }
 }
 
 export default new Auth();
