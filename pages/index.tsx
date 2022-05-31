@@ -60,7 +60,11 @@ const Home: NextPage = () => {
 
             console.log(data);
 
-            if (error || !data?.answers) return toast.error(`The request failed! ${error && error?.message}`);
+            if (error || !data?.answers) {
+                toast.error(`The request failed! ${error && error?.message}`);
+                Auth.removeToken();
+                return window.location.reload();
+            }
 
             setKahootAnswers(data.answers);
             sessionStorage.setItem('answers', JSON.stringify(data.answers));
