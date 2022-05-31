@@ -9,7 +9,7 @@ const validateUrl = (url: string) => {
 
     if (!toUrl) return false;
 
-    const condition = !toUrl.searchParams.get('challenge-id') && !toUrl.searchParams.get('quiz-id');
+    const condition = !toUrl.searchParams.get('challenge-id') && !toUrl.searchParams.get('quiz-id') && !toUrl.searchParams.get('quizId');
 
     if (condition) return false;
 

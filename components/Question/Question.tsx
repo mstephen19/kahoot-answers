@@ -25,7 +25,7 @@ export default function Question({ index, title, choices }: QuestionProps) {
                 </Typography>
             </Box>
             <Box className={classes.choiceBox}>
-                {choices.map((choice) => {
+                {choices?.length && choices.map((choice) => {
                     return <Choice choice={choice} key={choice?.answer} />;
                 })}
             </Box>

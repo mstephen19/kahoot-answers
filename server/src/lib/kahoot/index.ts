@@ -12,7 +12,7 @@ export const createRequest = (string: string): Request => {
     }
 
     const challengeId = url.searchParams.get('challenge-id') || '';
-    const quizId = url.searchParams.get('quiz-id') || '';
+    const quizId = url.searchParams.get('quiz-id') || url.searchParams.get('quizId') || '';
 
     const type = (challengeId && types.CHALLENGE) || (quizId && types.QUIZ);
     if (!type) throw new Error('Unable to determine type.');
@@ -26,6 +26,8 @@ export const createRequest = (string: string): Request => {
 export const getAnswers = async ({ type, uri }: Request) => {
     try {
         const { data } = await axios.get(uri);
+
+        console.log(data);
 
         if (type === 'CHALLENGE') {
             const { answers } = data;

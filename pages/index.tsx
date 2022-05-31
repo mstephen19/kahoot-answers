@@ -58,6 +58,8 @@ const Home: NextPage = () => {
         try {
             const { data } = await answers({ variables: { url } });
 
+            console.log(data);
+
             if (error || !data?.answers) return toast.error(`The request failed! ${error && error?.message}`);
 
             setKahootAnswers(data.answers);

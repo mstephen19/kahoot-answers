@@ -1,4 +1,6 @@
 const shortenAndTrim = (str: string) => {
+    if (!str) return 'N/A';
+
     const cleaned = str.trim().replace(/<[a-zA-Z]*>|<\/[a-zA-Z]*>/g, '');
 
     if (cleaned.length > 60) return `${cleaned.slice(0, 60)}...`;
